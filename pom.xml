@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.nickz</groupId>
-	<artifactId>traders-stats</artifactId>
+	<artifactId>trader-stats</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>traders-stats</name>
+	<name>trader-stats</name>
 	<description>LeverX final project</description>
 
 	<properties>
