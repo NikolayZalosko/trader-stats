@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class TraderStatsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TradersStatsApplication.class, args);
+		SpringApplication.run(TraderStatsApplication.class, args);
 	}
 
 }
