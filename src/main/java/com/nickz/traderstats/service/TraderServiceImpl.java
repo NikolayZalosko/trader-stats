@@ -26,6 +26,11 @@ public class TraderServiceImpl implements TraderService {
     public List<Trader> findAll() {
 	return repository.findAll();
     }
+    
+    @Override
+    public Trader findById(int traderId) {
+	return repository.getOne(traderId);
+    }
 
     @Override
     public Trader save(TraderRegistrationDto traderDto) {
@@ -50,5 +55,7 @@ public class TraderServiceImpl implements TraderService {
 	// TODO Auto-generated method stub
 	return false;
     }
+
+  
 
 }

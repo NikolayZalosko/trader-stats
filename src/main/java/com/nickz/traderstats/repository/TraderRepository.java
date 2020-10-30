@@ -7,5 +7,5 @@ import com.nickz.traderstats.model.Trader;
 
 @Repository
 public interface TraderRepository extends JpaRepository<Trader, Integer> {
-
+    
 }

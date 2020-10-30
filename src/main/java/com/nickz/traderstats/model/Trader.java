@@ -1,10 +1,7 @@
 package com.nickz.traderstats.model;
 
 import java.time.ZonedDateTime;
-import java.util.Map;
-
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,11 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
-import com.nickz.traderstats.dto.TraderRegistrationDto;
-
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
