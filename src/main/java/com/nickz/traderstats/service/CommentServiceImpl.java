@@ -27,7 +27,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Comment create(CommentCreationDto commentDto) {
 	Comment comment = new Comment();
-	comment.setTrader(traderService.findById(commentDto.getTraderId()));
+//	comment.setTrader(traderService.findById(commentDto.getTraderId()));
+	comment.setTraderId(commentDto.getTraderId());
 	comment.setRating(commentDto.getRating());
 	comment.setMessage(commentDto.getMessage());
 	comment.setCreationDate(ZonedDateTime.now());

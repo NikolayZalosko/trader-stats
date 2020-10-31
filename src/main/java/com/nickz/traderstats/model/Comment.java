@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,10 +27,15 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    /*
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "trader_id")
+    @JsonIgnore
     private Trader trader;
-
+    */
+    
+    private int traderId;
+    
     @Column(name = "rating")
     private int rating;
 
