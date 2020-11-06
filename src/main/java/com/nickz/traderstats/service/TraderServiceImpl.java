@@ -55,6 +55,11 @@ public class TraderServiceImpl implements TraderService {
 	return false;
     }
 
+    @Override
+    public Trader getOne(int traderId) {
+	return repository.getOne(traderId);
+    }
+
   
 
 }

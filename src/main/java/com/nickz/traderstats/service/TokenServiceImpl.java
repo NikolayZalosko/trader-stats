@@ -12,8 +12,11 @@ import com.nickz.traderstats.repository.TokenRepository;
 @Service
 public class TokenServiceImpl implements TokenService {
     
-    @Autowired
     private TokenRepository tokenRepository;
+    
+    public TokenServiceImpl(TokenRepository tokenRepository) {
+	this.tokenRepository = tokenRepository;
+    }
 
     @Override
     public String generateToken() {
@@ -31,8 +34,8 @@ public class TokenServiceImpl implements TokenService {
 
 
     @Override
-    public boolean delete(TraderToken token) {
-	return tokenRepository.delete("trader:" + token.getTraderId());
+    public boolean delete(String token) {
+	return tokenRepository.delete(token);
     }
 
 }

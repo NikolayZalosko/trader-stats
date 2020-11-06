@@ -6,5 +6,5 @@ public interface TokenService {
     String generateToken();
     TraderToken save(TraderToken token);
     String getTraderId(String token);
-    boolean delete(TraderToken token);
+    boolean delete(String token);
 }

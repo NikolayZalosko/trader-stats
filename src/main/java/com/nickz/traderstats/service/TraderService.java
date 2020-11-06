@@ -7,8 +7,15 @@ import com.nickz.traderstats.model.Trader;
 
 public interface TraderService {
     List<Trader> findAll();
+    
     Trader findById(int traderId);
+    
+    /* returns a proxy object */
+    Trader getOne(int traderId);
+    
     Trader save(TraderRegistrationDto traderDto);
+    
     Trader update(Trader trader);
+    
     boolean delete(int id);
 }
