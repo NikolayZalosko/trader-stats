@@ -2,6 +2,7 @@ package com.nickz.traderstats.controller.v1;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.nickz.traderstats.dto.TraderRegistrationDto;
 import com.nickz.traderstats.model.Trader;
+import com.nickz.traderstats.model.TraderToken;
 import com.nickz.traderstats.service.EmailService;
 import com.nickz.traderstats.service.TokenService;
 import com.nickz.traderstats.service.TraderService;
@@ -48,11 +50,17 @@ class TraderController {
 	String token = tokenService.generateToken();
 	try {
 	    emailService.sendVerificationEmail(traderDto, token);
+	    
 	} catch (MailException e) {
 	    logger.error(e.getMessage());
+	} catch (MessagingException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
 	}
-	
-	return traderService.save(traderDto);
+	Trader savedTrader = traderService.save(traderDto);
+	int traderId = savedTrader.getId();
+	tokenService.save(new TraderToken(traderId, token));
+	return savedTrader;
     }
     
 }

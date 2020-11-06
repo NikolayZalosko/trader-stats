@@ -24,6 +24,10 @@ public class TokenServiceImpl implements TokenService {
     public TraderToken save(TraderToken token) {
 	return tokenRepository.save(token, Duration.ofHours(24));
     }
+    
+    public String getTraderId(String token) {
+	return tokenRepository.getTraderId(token);
+    }
 
 
     @Override

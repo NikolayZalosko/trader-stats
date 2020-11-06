@@ -46,8 +46,7 @@ public class TraderServiceImpl implements TraderService {
 
     @Override
     public Trader update(Trader trader) {
-	// TODO Auto-generated method stub
-	return null;
+	return repository.save(trader);
     }
 
     @Override
