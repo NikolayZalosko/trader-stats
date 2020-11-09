@@ -15,7 +15,7 @@ public class RedisConfiguration {
 	RedisStandaloneConfiguration config = new RedisStandaloneConfiguration("localhost", 6379);
 	return new JedisConnectionFactory(config);
     }
-    
+
     @Bean
     StringRedisSerializer stringRedisSerializer() {
 	return new StringRedisSerializer();
@@ -29,6 +29,5 @@ public class RedisConfiguration {
 	template.setValueSerializer(stringRedisSerializer());
 	return template;
     }
-    
-    
+
 }

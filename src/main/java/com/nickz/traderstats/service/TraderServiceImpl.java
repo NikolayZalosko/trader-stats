@@ -3,7 +3,6 @@ package com.nickz.traderstats.service;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,24 +13,24 @@ import com.nickz.traderstats.repository.TraderRepository;
 
 @Service
 public class TraderServiceImpl implements TraderService {
-
-    @Autowired
     private TraderRepository repository;
-    
-    @Autowired
     private PasswordEncoder passwordEncoder;
-    
-    
+
+    public TraderServiceImpl(TraderRepository repository, PasswordEncoder passwordEncoder) {
+	this.repository = repository;
+	this.passwordEncoder = passwordEncoder;
+    }
+
     @Override
     public List<Trader> findAll() {
 	return repository.findAll();
     }
-    
+
     @Override
     public Trader findById(int traderId) {
 	return repository.getOne(traderId);
     }
-    
+
     @Override
     public Trader getOne(int traderId) {
 	return repository.getOne(traderId);
@@ -59,7 +58,5 @@ public class TraderServiceImpl implements TraderService {
 	// TODO Auto-generated method stub
 	return false;
     }
-
-  
 
 }

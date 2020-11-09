@@ -11,12 +11,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    
+
     @Bean
     public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
+	return new BCryptPasswordEncoder();
     }
-    
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 	http.csrf().disable();

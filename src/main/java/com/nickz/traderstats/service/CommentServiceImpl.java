@@ -3,7 +3,6 @@ package com.nickz.traderstats.service;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nickz.traderstats.dto.CommentCreationDto;
@@ -12,12 +11,13 @@ import com.nickz.traderstats.repository.CommentRepository;
 
 @Service
 public class CommentServiceImpl implements CommentService {
-    
-    @Autowired
     private CommentRepository repository;
-    
-    @Autowired
     private TraderService traderService;
+
+    public CommentServiceImpl(CommentRepository repository, TraderService traderService) {
+	this.repository = repository;
+	this.traderService = traderService;
+    }
 
     @Override
     public List<Comment> findTraderComments(int traderId) {
