@@ -31,6 +31,11 @@ public class TraderServiceImpl implements TraderService {
     public Trader findById(int traderId) {
 	return repository.getOne(traderId);
     }
+    
+    @Override
+    public Trader getOne(int traderId) {
+	return repository.getOne(traderId);
+    }
 
     @Override
     public Trader save(TraderRegistrationDto traderDto) {

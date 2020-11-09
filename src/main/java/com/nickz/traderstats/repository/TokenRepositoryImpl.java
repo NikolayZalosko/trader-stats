@@ -36,6 +36,9 @@ public class TokenRepositoryImpl implements TokenRepository {
 	String key = token.getToken();
 	String value = String.valueOf(token.getTraderId());
 	valueOperations.set(key, value, duration);
+	
+	
+	
 	return token;
     }
     

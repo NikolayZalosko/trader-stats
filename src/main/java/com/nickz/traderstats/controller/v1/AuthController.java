@@ -1,5 +1,7 @@
 package com.nickz.traderstats.controller.v1;
 
+import java.util.Optional;
+
 import javax.mail.MessagingException;
 
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nickz.traderstats.dto.TraderRegistrationDto;
@@ -65,13 +68,21 @@ class AuthController {
     }
     
     @GetMapping("/confirm_email/{token}")
-    public String confirmEmail(@PathVariable String token) {
+    public Trader confirmEmail(@PathVariable String token) {
+//	Optional<Integer> traderIdOpt = Optional.of(Integer.valueOf(tokenService.getTraderId(token)));
+	
+//	String nullableTraderId = 
 	int traderId = Integer.valueOf(tokenService.getTraderId(token));
+	Trader traderToUpdate = traderService.getOne(traderId);
+	traderToUpdate.setStatus(TraderStatus.NOT_APPROVED_YET);
+	tokenService.delete(token);
+	/*
 	Trader oldTrader = traderService.findById(traderId);
 	Trader newTrader = new Trader();
 	BeanUtils.copyProperties(oldTrader, newTrader);
 	newTrader.setStatus(TraderStatus.NOT_APPROVED_YET);
-	traderService.update(newTrader);
-	return String.valueOf(traderId);
+	*/
+	
+	return traderService.update(traderToUpdate);
     }
 }

@@ -31,8 +31,8 @@ public class TokenServiceImpl implements TokenService {
 
 
     @Override
-    public boolean delete(TraderToken token) {
-	return tokenRepository.delete("trader:" + token.getTraderId());
+    public boolean delete(String token) {
+	return tokenRepository.delete(token);
     }
 
 }
