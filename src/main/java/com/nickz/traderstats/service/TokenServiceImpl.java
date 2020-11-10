@@ -21,10 +21,6 @@ public class TokenServiceImpl implements TokenService {
 	this.tokenRepository = tokenRepository;
     }
 
-    public TokenServiceImpl(TokenRepository tokenRepository) {
-	this.tokenRepository = tokenRepository;
-    }
-
     private String generateToken() {
 	return UUID.randomUUID().toString();
     }
