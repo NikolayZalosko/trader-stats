@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nickz.traderstats.dto.TraderRegistrationDto;
+import com.nickz.traderstats.exception.TraderAlreadyExistsException;
 import com.nickz.traderstats.model.Trader;
 import com.nickz.traderstats.model.TraderToken;
 import com.nickz.traderstats.service.EmailService;
@@ -44,19 +45,17 @@ class TraderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Trader create(@RequestBody @Valid TraderRegistrationDto traderDto) {
-	String token = tokenService.generateToken();
+    public Trader create(@RequestBody @Valid TraderRegistrationDto traderDto) throws TraderAlreadyExistsException {
+	Trader savedTrader = traderService.save(traderDto);
+	String token = tokenService.save(savedTrader.getId());
 	try {
 	    emailService.sendVerificationEmail(traderDto, token);
-
 	} catch (MailException e) {
-	    logger.error(e.getMessage());
+	    logger.debug(e.getMessage());
 	} catch (MessagingException e) {
 	    logger.debug(e.getMessage());
 	}
-	Trader savedTrader = traderService.save(traderDto);
-	int traderId = savedTrader.getId();
-	tokenService.save(new TraderToken(traderId, token));
+	
 	return savedTrader;
     }
 

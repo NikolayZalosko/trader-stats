@@ -16,14 +16,14 @@ public class TokenServiceImpl implements TokenService {
 	this.tokenRepository = tokenRepository;
     }
 
-    @Override
-    public String generateToken() {
+    private String generateToken() {
 	return UUID.randomUUID().toString();
     }
 
     @Override
-    public TraderToken save(TraderToken token) {
-	return tokenRepository.save(token, Duration.ofHours(24));
+    public String save(int traderId) {
+	TraderToken tokenObj = new TraderToken(traderId, this.generateToken());
+	return tokenRepository.save(tokenObj, Duration.ofHours(24)).getToken();
     }
 
     public String getTraderId(String token) {

@@ -21,60 +21,22 @@ import com.nickz.traderstats.service.TraderService;
 @RestController
 @RequestMapping("/api/v1/auth")
 class AuthController {
-    private EmailService emailService;
     private TokenService tokenService;
     private TraderService traderService;
     private Logger logger = LoggerFactory.getLogger(TraderController.class);
 
-    public AuthController(EmailService emailService, TokenService tokenService, TraderService traderService) {
-	this.emailService = emailService;
+    public AuthController(TokenService tokenService, TraderService traderService) {
 	this.tokenService = tokenService;
 	this.traderService = traderService;
     }
 
-    @GetMapping("/getToken")
-    public String getToken() {
-	String token = tokenService.generateToken();
-	return token;
-    }
-
-    @GetMapping("/sendToken")
-    public String sendToken() {
-	String token = tokenService.generateToken();
-	TraderRegistrationDto traderDto = new TraderRegistrationDto();
-	traderDto.setFirstName("ludvig");
-	traderDto.setLastName("bodmer");
-	traderDto.setEmail("wemen60755@gusronk.com");
-	traderDto.setPassword("12345678");
-	try {
-	    emailService.sendVerificationEmail(traderDto, token);
-	} catch (MailException e) {
-	    logger.error(e.getMessage());
-	} catch (MessagingException e) {
-	    logger.error(e.getMessage());
-	}
-	TraderToken tokenObj = new TraderToken();
-	tokenObj.setTraderId(2);
-	tokenObj.setToken(token);
-	tokenService.save(tokenObj);
-	return token;
-    }
-
     @GetMapping("/confirm_email/{token}")
     public Trader confirmEmail(@PathVariable String token) {
-//	Optional<Integer> traderIdOpt = Optional.of(Integer.valueOf(tokenService.getTraderId(token)));
-
-//	String nullableTraderId = 
 	int traderId = Integer.valueOf(tokenService.getTraderId(token));
 	Trader traderToUpdate = traderService.getOne(traderId);
 	traderToUpdate.setStatus(TraderStatus.NOT_APPROVED_YET);
 	tokenService.delete(token);
-	/*
-	 * Trader oldTrader = traderService.findById(traderId); Trader newTrader = new
-	 * Trader(); BeanUtils.copyProperties(oldTrader, newTrader);
-	 * newTrader.setStatus(TraderStatus.NOT_APPROVED_YET);
-	 */
-
+	
 	return traderService.update(traderToUpdate);
     }
 }
