@@ -1,5 +1,7 @@
 package com.nickz.traderstats.controller.v1;
 
+import java.time.Duration;
+
 import javax.mail.MessagingException;
 
 import org.slf4j.Logger;
@@ -7,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +27,6 @@ import com.nickz.traderstats.service.TraderService;
 class AuthController {
     private TokenService tokenService;
     private TraderService traderService;
-    private Logger logger = LoggerFactory.getLogger(TraderController.class);
 
     public AuthController(TokenService tokenService, TraderService traderService) {
 	this.tokenService = tokenService;
@@ -38,5 +41,10 @@ class AuthController {
 	tokenService.delete(token);
 	
 	return traderService.update(traderToUpdate);
+    }
+    
+    @PostMapping("/save_token")
+    public TraderToken saveToken(@RequestBody TraderToken token) {
+	return tokenService.save(token, Duration.ofSeconds(5));
     }
 }
