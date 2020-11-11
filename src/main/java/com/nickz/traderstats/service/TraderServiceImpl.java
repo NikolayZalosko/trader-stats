@@ -57,7 +57,7 @@ public class TraderServiceImpl implements TraderService {
 
     @Override
     public Trader save(TraderRegistrationDto traderDto) throws TraderAlreadyExistsException {
-	Trader existingTrader = this.findByEmail(traderDto.getEmail());
+	Trader existingTrader = traderRepository.findByEmail(traderDto.getEmail());
 	if (existingTrader != null) {
 	    throw new TraderAlreadyExistsException("Trader with this email already exists");
 	}
@@ -83,6 +83,5 @@ public class TraderServiceImpl implements TraderService {
     @Override
     public void delete(int traderId) {
 	traderRepository.deleteById(traderId);
-	;
     }
 }

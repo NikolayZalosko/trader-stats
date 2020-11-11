@@ -7,6 +7,7 @@ import javax.mail.MessagingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.MailException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ import com.nickz.traderstats.service.TraderService;
 
 @RestController
 @RequestMapping("/api/v1/auth")
+@CrossOrigin
 class AuthController {
     private TokenService tokenService;
     private TraderService traderService;
