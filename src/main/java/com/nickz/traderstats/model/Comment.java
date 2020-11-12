@@ -1,5 +1,6 @@
 package com.nickz.traderstats.model;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
@@ -38,8 +39,8 @@ public class Comment {
     private String message;
 
     @Column(name = "creation_date")
-    private ZonedDateTime creationDate;
+    private LocalDateTime creationDate;
 
-    @Column(name = "is_approved")
-    private boolean isApproved;
+    @Column(name = "status")
+    private CommentStatus status;
 }

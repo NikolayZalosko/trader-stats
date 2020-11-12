@@ -1,5 +1,6 @@
 package com.nickz.traderstats.model;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
@@ -37,7 +38,7 @@ public class Trader {
     private String email;
 
     @Column(name = "creation_date")
-    private ZonedDateTime creationDate;
+    private LocalDateTime creationDate;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

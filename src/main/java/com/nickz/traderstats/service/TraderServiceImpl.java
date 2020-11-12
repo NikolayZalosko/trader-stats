@@ -1,5 +1,6 @@
 package com.nickz.traderstats.service;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class TraderServiceImpl implements TraderService {
 	trader.setLastName(traderDto.getLastName());
 	trader.setPassword(passwordEncoder.encode(traderDto.getPassword()));
 	trader.setEmail(traderDto.getEmail());
-	trader.setCreationDate(ZonedDateTime.now());
+	trader.setCreationDate(LocalDateTime.now());
 	trader.setStatus(TraderStatus.EMAIL_NOT_VERIFIED);
 
 	return traderRepository.save(trader);
