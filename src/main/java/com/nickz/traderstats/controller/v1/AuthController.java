@@ -46,8 +46,10 @@ class AuthController {
 	return traderService.update(traderToUpdate);
     }
 
+    /*
     @PostMapping("/save_token")
     public TraderToken saveToken(@RequestBody TraderToken token) {
 	return tokenService.save(token, Duration.ofSeconds(5));
     }
+    */
 }

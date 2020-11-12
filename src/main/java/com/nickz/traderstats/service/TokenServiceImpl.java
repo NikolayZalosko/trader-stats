@@ -7,6 +7,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.data.redis.core.RedisKeyExpiredEvent;
 import org.springframework.stereotype.Service;
 
+import com.nickz.traderstats.exception.ResourceNotFoundException;
 import com.nickz.traderstats.model.TraderToken;
 import com.nickz.traderstats.repository.TokenRepository;
 
@@ -35,8 +36,9 @@ public class TokenServiceImpl implements TokenService {
 	return tokenRepository.save(token, duration);
     }
 
-    public String getTraderId(String token) {
-	return tokenRepository.getTraderId(token);
+    public String getTraderId(String token) throws ResourceNotFoundException {
+	return tokenRepository.getTraderId(token)
+		.orElseThrow(() -> new ResourceNotFoundException("The token is not valid"));
     }
 
     @Override
@@ -45,12 +47,10 @@ public class TokenServiceImpl implements TokenService {
     }
 
     /*
-    @EventListener
-    public void onRedisKeyExpiredEvent(RedisKeyExpiredEvent<Object> event) {
-	System.out.println("Event listened");
-	log.info(new String(event.getSource()));
-	log.info(event.getValue().toString());
-    }
-    */
+     * @EventListener public void
+     * onRedisKeyExpiredEvent(RedisKeyExpiredEvent<Object> event) {
+     * System.out.println("Event listened"); log.info(new
+     * String(event.getSource())); log.info(event.getValue().toString()); }
+     */
 
 }

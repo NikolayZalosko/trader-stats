@@ -1,6 +1,7 @@
 package com.nickz.traderstats.repository;
 
 import java.time.Duration;
+import java.util.Optional;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -12,7 +13,8 @@ import com.nickz.traderstats.model.TraderToken;
 public class TokenRepositoryImpl implements TokenRepository {
 
     /*
-     * key - token value - traderId
+     * key - token
+     * value - traderId
      */
     private RedisTemplate<String, String> redisTemplate;
 
@@ -32,8 +34,8 @@ public class TokenRepositoryImpl implements TokenRepository {
     }
 
     @Override
-    public String getTraderId(String token) {
-	return valueOperations.get(token);
+    public Optional<String> getTraderId(String token) {
+	return Optional.ofNullable(valueOperations.get(token));
     }
 
     @Override

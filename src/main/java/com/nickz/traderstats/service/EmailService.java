@@ -7,5 +7,6 @@ import org.springframework.mail.MailException;
 import com.nickz.traderstats.dto.TraderRegistrationDto;
 
 public interface EmailService {
-    void sendVerificationEmail(TraderRegistrationDto traderDto, String token) throws MessagingException, MailException;
+    
+    void sendVerificationEmail(TraderRegistrationDto traderDto, String token) throws MessagingException, MailException; 
 }

@@ -10,6 +10,7 @@ import com.nickz.traderstats.model.Comment;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
+    
     @Query(value = "SELECT * FROM comment WHERE trader_id = ?1", nativeQuery = true)
     List<Comment> findTraderComments(int traderId);
 }
