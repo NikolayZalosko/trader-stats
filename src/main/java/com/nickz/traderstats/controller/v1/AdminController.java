@@ -88,12 +88,13 @@ public class AdminController {
     }
 
     /*
-     * Approve a comment
+     * Approve a comment and update trader's rating
      */
     @GetMapping("/comments/{commentId}/approve")
     public Comment approveComment(@PathVariable int commentId) {
 	Comment commentToUpdate = commentService.findById(commentId);
 	commentToUpdate.setStatus(CommentStatus.APPROVED);
+	traderService.updateRating(commentToUpdate.getTraderId());
 	return commentService.update(commentToUpdate);
     }
 

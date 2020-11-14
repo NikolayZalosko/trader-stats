@@ -30,6 +30,9 @@ public class Trader {
     @Column(name = "last_name")
     private String lastName;
     
+    @Column(name = "rating")
+    private Double rating;
+    
     @Column(name = "is_approved")
     private Boolean isApproved;
     

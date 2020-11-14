@@ -20,6 +20,8 @@ public interface TraderService {
     
     Trader update(Trader trader) throws ResourceNotFoundException;
     
+    Trader updateRating(int traderId);
+    
     void delete(int id) throws ResourceNotFoundException;
     void deleteAll();
 }

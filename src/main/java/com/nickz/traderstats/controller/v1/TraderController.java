@@ -55,7 +55,7 @@ class TraderController {
     @GetMapping
     public List<TraderBasicInfoDto> getAllTraders() {
 	return traderService.findAll().stream()
-		.map(trader -> new TraderBasicInfoDto(trader.getId(), trader.getFirstName(), trader.getLastName()))
+		.map(trader -> new TraderBasicInfoDto(trader.getId(), trader.getFirstName(), trader.getLastName(), trader.getRating()))
 		.collect(Collectors.toList());
     }
 

@@ -1,7 +1,13 @@
 package com.nickz.traderstats.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -9,6 +15,7 @@ import com.nickz.traderstats.dto.CommentCreationDto;
 import com.nickz.traderstats.exception.ResourceNotFoundException;
 import com.nickz.traderstats.model.Comment;
 import com.nickz.traderstats.model.CommentStatus;
+import com.nickz.traderstats.model.Trader;
 import com.nickz.traderstats.repository.CommentRepository;
 import com.nickz.traderstats.repository.TraderRepository;
 
@@ -42,16 +49,19 @@ public class CommentServiceImpl implements CommentService {
     public Comment save(CommentCreationDto commentDto, Integer traderId) {
 	Comment comment = new Comment();
 	/*
-	comment.setTrader(traderRepository.findById(traderId)
-		.orElseThrow(() -> new ResourceNotFoundException("Trader with this ID doesn't exist")));
-	*/
+	 * comment.setTrader(traderRepository.findById(traderId) .orElseThrow(() -> new
+	 * ResourceNotFoundException("Trader with this ID doesn't exist")));
+	 */
 	comment.setTraderId(traderId);
 	comment.setRating(commentDto.getRating());
 	comment.setMessage(commentDto.getMessage());
 	comment.setCreationDate(LocalDateTime.now());
 	comment.setStatus(CommentStatus.NOT_APPROVED_YET);
+	
 	return commentRepository.save(comment);
     }
+
+    
 
     @Override
     public Comment update(Comment updatedComment) {

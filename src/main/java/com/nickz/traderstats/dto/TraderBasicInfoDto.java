@@ -13,4 +13,5 @@ public class TraderBasicInfoDto {
     private Integer id;
     private String firstName;
     private String lastName;
+    private Double rating;
 }
