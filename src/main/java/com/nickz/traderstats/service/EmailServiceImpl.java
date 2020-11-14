@@ -9,7 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import com.nickz.traderstats.dto.TraderRegistrationDto;
+import com.nickz.traderstats.dto.UserEmailSendingDto;
 
 @Service
 public class EmailServiceImpl implements EmailService {
@@ -26,17 +26,16 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendVerificationEmail(TraderRegistrationDto traderDto, String token)
+    public void sendVerificationEmail(UserEmailSendingDto userDto, String token)
 	    throws MessagingException, MailException {
 	MimeMessage message = mailSender.createMimeMessage();
 	MimeMessageHelper helper = new MimeMessageHelper(message, true);
-	helper.setTo(traderDto.getEmail());
+	helper.setTo(userDto.getEmail());
 	helper.setSubject("Confirm your email");
 
 	String link = HOST + ":" + PORT + "/api/v1/auth/confirm_email/" + token;
-	String text = "Hello, " + traderDto.getFirstName()
-		+ "! To confirm your email in trader-stats app follow the link: " + "<a href=\"" + link + "\">" + link
-		+ "</a>";
+	String text = "Hello, " + userDto.getName() + "! To confirm your email in trader-stats app follow the link: "
+		+ "<a href=\"" + link + "\" target=\"_blank\" rel=\"noopener noreferrer\">" + link + "</a>";
 	helper.setText(text, true);
 
 	mailSender.send(message);

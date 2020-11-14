@@ -1,29 +1,23 @@
 package com.nickz.traderstats.service;
 
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.nickz.traderstats.dto.TraderRegistrationDto;
+import com.nickz.traderstats.dto.TraderWithNoUserAttachedDto;
+import com.nickz.traderstats.dto.TraderWithUserAttachedDto;
 import com.nickz.traderstats.exception.ResourceNotFoundException;
-import com.nickz.traderstats.exception.TraderAlreadyExistsException;
 import com.nickz.traderstats.model.Trader;
-import com.nickz.traderstats.model.TraderStatus;
 import com.nickz.traderstats.repository.TraderRepository;
 
 @Service
 public class TraderServiceImpl implements TraderService {
     private TraderRepository traderRepository;
-    private PasswordEncoder passwordEncoder;
 
-    public TraderServiceImpl(TraderRepository repository, PasswordEncoder passwordEncoder) {
+    public TraderServiceImpl(TraderRepository repository) {
 	this.traderRepository = repository;
-	this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -34,16 +28,7 @@ public class TraderServiceImpl implements TraderService {
     @Override
     public Trader findById(int traderId) throws ResourceNotFoundException {
 	Trader foundTrader = traderRepository.findById(traderId)
-		.orElseThrow(() -> new ResourceNotFoundException("Trader with this id doesn't exist"));
-	return foundTrader;
-    }
-
-    @Override
-    public Trader findByEmail(String email) throws ResourceNotFoundException {
-	Trader foundTrader = traderRepository.findByEmail(email);
-	if (foundTrader == null) {
-	    throw new ResourceNotFoundException("Trader with this email doesn't exist");
-	}
+		.orElseThrow(() -> new ResourceNotFoundException("Trader with this ID doesn't exist"));
 	return foundTrader;
     }
 
@@ -57,20 +42,21 @@ public class TraderServiceImpl implements TraderService {
     }
 
     @Override
-    public Trader save(TraderRegistrationDto traderDto) throws TraderAlreadyExistsException {
-	Trader existingTrader = traderRepository.findByEmail(traderDto.getEmail());
-	if (existingTrader != null) {
-	    throw new TraderAlreadyExistsException("Trader with this email already exists");
-	}
-
+    public Trader save(TraderWithUserAttachedDto traderDto) {
 	Trader trader = new Trader();
 	trader.setFirstName(traderDto.getFirstName());
 	trader.setLastName(traderDto.getLastName());
-	trader.setPassword(passwordEncoder.encode(traderDto.getPassword()));
-	trader.setEmail(traderDto.getEmail());
-	trader.setCreationDate(LocalDateTime.now());
-	trader.setStatus(TraderStatus.EMAIL_NOT_VERIFIED);
+	trader.setUser(traderDto.getUser());
+	trader.setIsApproved(null);
+	return traderRepository.save(trader);
+    }
 
+    @Override
+    public Trader saveWithNoUserAttached(TraderWithNoUserAttachedDto traderDto) {
+	Trader trader = new Trader();
+	trader.setFirstName(traderDto.getFirstName());
+	trader.setLastName(traderDto.getLastName());
+	trader.setIsApproved(null);
 	return traderRepository.save(trader);
     }
 
@@ -83,6 +69,13 @@ public class TraderServiceImpl implements TraderService {
 
     @Override
     public void delete(int traderId) {
+	traderRepository.findById(traderId)
+		.orElseThrow(() -> new ResourceNotFoundException("Trader with this ID doesn't exist"));
 	traderRepository.deleteById(traderId);
+    }
+    
+    @Override
+    public void deleteAll() {
+	traderRepository.deleteAll();
     }
 }

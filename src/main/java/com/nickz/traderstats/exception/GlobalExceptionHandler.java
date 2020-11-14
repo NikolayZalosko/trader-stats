@@ -10,8 +10,8 @@ import org.springframework.web.context.request.WebRequest;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(TraderAlreadyExistsException.class)
-    public ResponseEntity<?> handleTraderAlreadyExistsException(TraderAlreadyExistsException ex, WebRequest request) {
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public ResponseEntity<?> handleEmailAlreadyExistsException(EmailAlreadyExistsException ex, WebRequest request) {
 	ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ex.getMessage());
 	return new ResponseEntity<>(errorDetails, HttpStatus.FORBIDDEN);
     }

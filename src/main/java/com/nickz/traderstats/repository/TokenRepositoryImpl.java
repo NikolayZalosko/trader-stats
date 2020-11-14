@@ -7,7 +7,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 
-import com.nickz.traderstats.model.TraderToken;
+import com.nickz.traderstats.model.UserToken;
 
 @Repository
 public class TokenRepositoryImpl implements TokenRepository {
@@ -26,15 +26,15 @@ public class TokenRepositoryImpl implements TokenRepository {
     }
 
     @Override
-    public TraderToken save(TraderToken token, Duration duration) {
+    public UserToken save(UserToken token, Duration duration) {
 	String key = token.getToken();
-	String value = String.valueOf(token.getTraderId());
+	String value = String.valueOf(token.getUserId());
 	valueOperations.set(key, value, duration);
 	return token;
     }
 
     @Override
-    public Optional<String> getTraderId(String token) {
+    public Optional<String> getUserId(String token) {
 	return Optional.ofNullable(valueOperations.get(token));
     }
 

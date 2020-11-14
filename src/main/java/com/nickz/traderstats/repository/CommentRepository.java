@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.nickz.traderstats.model.Comment;
@@ -11,6 +12,8 @@ import com.nickz.traderstats.model.Comment;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
     
-    @Query(value = "SELECT * FROM comment WHERE trader_id = ?1", nativeQuery = true)
-    List<Comment> findTraderComments(int traderId);
+    /*@Query(value = "SELECT * FROM comment WHERE id = "
+    	+ "(SELECT comment_id FROM comments_trader WHERE trader_id = :traderId)", nativeQuery = true)*/
+    @Query(value = "SELECT * FROM comment WHERE trader_id = :traderId", nativeQuery = true)
+    List<Comment> findTraderComments(@Param("traderId") int traderId);
 }

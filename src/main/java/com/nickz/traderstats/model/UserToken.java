@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TraderToken {
-    private int traderId;
+public class UserToken {
+    private Integer userId;
     private String token;
 }

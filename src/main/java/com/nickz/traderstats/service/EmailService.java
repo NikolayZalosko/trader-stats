@@ -4,9 +4,9 @@ import javax.mail.MessagingException;
 
 import org.springframework.mail.MailException;
 
-import com.nickz.traderstats.dto.TraderRegistrationDto;
+import com.nickz.traderstats.dto.UserEmailSendingDto;
 
 public interface EmailService {
     
-    void sendVerificationEmail(TraderRegistrationDto traderDto, String token) throws MessagingException, MailException; 
+    void sendVerificationEmail(UserEmailSendingDto userDto, String token) throws MessagingException, MailException; 
 }

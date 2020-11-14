@@ -3,13 +3,13 @@ package com.nickz.traderstats.repository;
 import java.time.Duration;
 import java.util.Optional;
 
-import com.nickz.traderstats.model.TraderToken;
+import com.nickz.traderstats.model.UserToken;
 
 public interface TokenRepository {
     
-    TraderToken save(TraderToken token, Duration duration);
+    UserToken save(UserToken token, Duration duration);
     
-    Optional<String> getTraderId(String token);
+    Optional<String> getUserId(String token);
     
     boolean delete(String key);
 }

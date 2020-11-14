@@ -8,11 +8,11 @@ import com.nickz.traderstats.model.Comment;
 
 public interface CommentService {
     
-    List<Comment> findTraderComments(int traderId);
+    List<Comment> findTraderComments(int traderId) throws ResourceNotFoundException;
     
     Comment findById(int commentId) throws ResourceNotFoundException;
 
-    Comment create(CommentCreationDto commentDto);
+    Comment save(CommentCreationDto commentDto, Integer traderId);
     
     Comment update(Comment updatedComment);
 }
