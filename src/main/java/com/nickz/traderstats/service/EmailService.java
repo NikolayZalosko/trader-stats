@@ -8,5 +8,6 @@ import com.nickz.traderstats.dto.UserEmailSendingDto;
 
 public interface EmailService {
     
-    void sendVerificationEmail(UserEmailSendingDto userDto, String token) throws MessagingException, MailException; 
+    void sendVerificationEmail(UserEmailSendingDto userDto, String token) throws MessagingException, MailException;
+    void sendPasswordResetEmail(UserEmailSendingDto userDto, String token) throws MessagingException, MailException;
 }

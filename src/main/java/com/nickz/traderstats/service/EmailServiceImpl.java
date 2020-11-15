@@ -40,5 +40,21 @@ public class EmailServiceImpl implements EmailService {
 
 	mailSender.send(message);
     }
+    
+    @Override
+    public void sendPasswordResetEmail(UserEmailSendingDto userDto, String token)
+            throws MessagingException, MailException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+	helper.setTo(userDto.getEmail());
+	helper.setSubject("Reset password");
+
+	String link = HOST + ":" + PORT + "/api/v1/auth/forgot_password/check_token/" + token;
+	String text = "Hello, " + userDto.getName() + "! To reset password in trader-stats app follow the link: "
+		+ "<a href=\"" + link + "\" target=\"_blank\" rel=\"noopener noreferrer\">" + link + "</a>";
+	helper.setText(text, true);
+
+	mailSender.send(message);
+    }
 
 }

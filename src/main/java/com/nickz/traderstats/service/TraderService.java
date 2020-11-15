@@ -14,6 +14,8 @@ public interface TraderService {
     
     Trader findById(int traderId) throws ResourceNotFoundException;
     
+    Trader findByUserId(int userId) throws ResourceNotFoundException;
+    
     Trader getOne(int traderId) throws ResourceNotFoundException; /* returns a proxy object */
     
     Trader save(TraderWithUserAttachedDto traderDto);

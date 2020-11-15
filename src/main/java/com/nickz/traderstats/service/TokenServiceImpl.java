@@ -29,9 +29,9 @@ public class TokenServiceImpl implements TokenService {
 	return tokenRepository.save(token, duration);
     }
 
-    public String getUserId(String token) throws ResourceNotFoundException {
-	return tokenRepository.getUserId(token)
-		.orElseThrow(() -> new ResourceNotFoundException("The token is not valid"));
+    public Integer getUserId(String token) throws ResourceNotFoundException {
+	return Integer.valueOf(tokenRepository.getUserId(token)
+		.orElseThrow(() -> new ResourceNotFoundException("The token is not valid")));
     }
 
     @Override

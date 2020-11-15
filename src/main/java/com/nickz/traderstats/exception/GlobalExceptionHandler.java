@@ -22,6 +22,11 @@ public class GlobalExceptionHandler {
 	return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(EmailNotVerifiedException.class)
+    public ResponseEntity<?> handleEmailNotVerifiedException(EmailNotVerifiedException ex, WebRequest request) {
+	ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ex.getMessage());
+	return new ResponseEntity<>(errorDetails, HttpStatus.FORBIDDEN);
+    }
     /*
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception ex, WebRequest request) {

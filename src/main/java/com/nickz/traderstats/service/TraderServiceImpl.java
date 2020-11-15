@@ -44,6 +44,15 @@ public class TraderServiceImpl implements TraderService {
 		.orElseThrow(() -> new ResourceNotFoundException("Trader with this ID doesn't exist"));
 	return foundTrader;
     }
+    
+    @Override
+    public Trader findByUserId(int userId) throws ResourceNotFoundException {
+        Trader foundTrader = traderRepository.findByUserId(userId);
+        if (foundTrader == null) {
+            throw new ResourceNotFoundException("Trader with this userId doesn't exist");
+        }
+        return foundTrader;
+    }
 
     @Override
     public Trader getOne(int traderId) throws ResourceNotFoundException {

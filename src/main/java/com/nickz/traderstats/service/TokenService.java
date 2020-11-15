@@ -11,7 +11,7 @@ public interface TokenService {
     
     UserToken save(UserToken token, Duration duration); /* for testing purposes */
 
-    String getUserId(String token) throws ResourceNotFoundException;
+    Integer getUserId(String token) throws ResourceNotFoundException;
 
     boolean delete(String token) throws ResourceNotFoundException;
 }

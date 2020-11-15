@@ -95,6 +95,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User resetPassword(int userId, String newRawPassword) throws ResourceNotFoundException {
+	User user = userRepository.findById(userId)
+		.orElseThrow(() -> new ResourceNotFoundException("User with this ID doesn't exist"));
+	user.setPassword(passwordEncoder.encode(newRawPassword));
+	return userRepository.save(user);
+    }
+
+    @Override
     public void delete(int userId) throws ResourceNotFoundException {
 	userRepository.findById(userId)
 		.orElseThrow(() -> new ResourceNotFoundException("User with this ID doesn't exist"));

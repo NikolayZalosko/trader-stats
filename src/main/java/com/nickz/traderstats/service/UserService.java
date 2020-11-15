@@ -21,6 +21,8 @@ public interface UserService extends UserDetailsService {
     User save(UserSavingDto userDto) throws EmailAlreadyExistsException;
 
     User update(User user) throws ResourceNotFoundException;
+    
+    User resetPassword(int userId, String newRawPassword) throws ResourceNotFoundException;
 
     void delete(int id) throws ResourceNotFoundException;
 }
