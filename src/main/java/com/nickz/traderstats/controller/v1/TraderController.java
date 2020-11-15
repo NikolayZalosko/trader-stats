@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -54,9 +55,8 @@ class TraderController {
      */
     @GetMapping
     public List<TraderBasicInfoDto> getAllTraders() {
-	return traderService.findAllApproved().stream()
-		.map(trader -> new TraderBasicInfoDto(trader.getId(), trader.getFirstName(), trader.getLastName(), trader.getRating()))
-		.collect(Collectors.toList());
+	return traderService.findAllApproved().stream().map(trader -> new TraderBasicInfoDto(trader.getId(),
+		trader.getFirstName(), trader.getLastName(), trader.getRating())).collect(Collectors.toList());
     }
 
     /*
@@ -94,6 +94,20 @@ class TraderController {
 	}
 
 	return savedTrader;
+    }
+
+    /*
+     * Get trader's top
+     */
+    @GetMapping("/top")
+    public List<TraderBasicInfoDto> getTradersTop(@RequestParam(name = "number", required = false) Integer number) {
+	if (number == null) {
+	    number = 10;
+	}
+	return traderService.findTop(number).stream().filter(trader -> trader.getRating() != null)
+		.map(trader -> new TraderBasicInfoDto(trader.getId(), trader.getFirstName(), trader.getLastName(),
+			trader.getRating()))
+		.collect(Collectors.toList());
     }
 
 }

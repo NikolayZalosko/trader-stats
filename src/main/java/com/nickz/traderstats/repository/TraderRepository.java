@@ -18,4 +18,7 @@ public interface TraderRepository extends JpaRepository<Trader, Integer> {
     
     @Query(value = "SELECT * FROM trader WHERE user_id = :userId", nativeQuery = true)
     Trader findByUserId(@Param("userId") int userId);
+    
+    @Query(value = "SELECT * FROM trader ORDER BY rating DESC LIMIT :number", nativeQuery = true)
+    List<Trader> findTopTraders(@Param("number") int number);
 }

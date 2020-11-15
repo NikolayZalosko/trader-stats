@@ -37,6 +37,11 @@ public class TraderServiceImpl implements TraderService {
     public List<Trader> findAllApproved() {
         return traderRepository.findAllApproved();
     }
+    
+    @Override
+    public List<Trader> findTop(int number) {
+        return traderRepository.findTopTraders(number);
+    }
 
     @Override
     public Trader findById(int traderId) throws ResourceNotFoundException {

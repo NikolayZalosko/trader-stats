@@ -10,12 +10,13 @@ import com.nickz.traderstats.model.Trader;
 public interface TraderService {
     
     List<Trader> findAll();
-    List<Trader> findAllApproved();
+    List<Trader> findAllApproved(); 
+    List<Trader> findTop(int number);
     
     Trader findById(int traderId) throws ResourceNotFoundException;
     
     Trader findByUserId(int userId) throws ResourceNotFoundException;
-    
+
     Trader getOne(int traderId) throws ResourceNotFoundException; /* returns a proxy object */
     
     Trader save(TraderWithUserAttachedDto traderDto);
