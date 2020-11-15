@@ -16,6 +16,8 @@ public interface TraderService {
     Trader findById(int traderId) throws ResourceNotFoundException;
     
     Trader findByUserId(int userId) throws ResourceNotFoundException;
+    
+    Trader findByUserEmail(String email) throws ResourceNotFoundException;
 
     Trader getOne(int traderId) throws ResourceNotFoundException; /* returns a proxy object */
     

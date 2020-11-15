@@ -2,7 +2,9 @@ package com.nickz.traderstats.service;
 
 import java.time.Duration;
 import java.util.UUID;
+
 import org.springframework.stereotype.Service;
+
 import com.nickz.traderstats.exception.ResourceNotFoundException;
 import com.nickz.traderstats.model.UserToken;
 import com.nickz.traderstats.repository.TokenRepository;

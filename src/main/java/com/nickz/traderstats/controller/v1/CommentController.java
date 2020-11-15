@@ -1,7 +1,6 @@
 package com.nickz.traderstats.controller.v1;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -23,12 +22,10 @@ import com.nickz.traderstats.model.Trader;
 import com.nickz.traderstats.service.CommentService;
 import com.nickz.traderstats.service.TraderService;
 
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api/v1")
 @CrossOrigin
-@Slf4j
 class CommentController {
     private CommentService commentService;
     private TraderService traderService;

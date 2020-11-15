@@ -2,7 +2,6 @@ package com.nickz.traderstats.model;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,8 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -20,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.Builder.ObtainVia;
 
 @Entity
 @Table(name = "comment")
@@ -30,17 +26,6 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
-    /*
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-	    name = "comments_trader",
-	    joinColumns =  @JoinColumn(name = "comment_id", referencedColumnName = "id"),
-	    inverseJoinColumns = @JoinColumn(name = "trader_id", referencedColumnName = "id")
-	    )
-//    @JsonIgnore
-    private Trader trader;
-    */
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore

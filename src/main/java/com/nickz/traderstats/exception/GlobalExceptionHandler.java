@@ -27,11 +27,13 @@ public class GlobalExceptionHandler {
 	ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ex.getMessage());
 	return new ResponseEntity<>(errorDetails, HttpStatus.FORBIDDEN);
     }
+    
     /*
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception ex, WebRequest request) {
-	ErrorDetails errorDetails = new ErrorDetails(LocalDate.now(), ex.getMessage(), request.getDescription(false));
+	ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));
 	return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
     */
+    
 }

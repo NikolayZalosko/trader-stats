@@ -1,5 +1,6 @@
 package com.nickz.traderstats.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.nickz.traderstats.service.UserService;
 
 @Configuration
 @EnableWebSecurity
@@ -20,6 +23,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Value("${spring.security.admin.password}")
     private String adminPassword;
     
+    @Autowired
+    private UserService userService;
+    
     @Bean
     public PasswordEncoder passwordEncoder() {
 	return new BCryptPasswordEncoder();
@@ -28,6 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser(adminUsername).password(passwordEncoder().encode(adminPassword)).roles("ADMIN");
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
 
     @Override
@@ -35,7 +42,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	http
 		.csrf().disable()
 		.cors().and()
-		.authorizeRequests().antMatchers("/api/v1/comments/**").permitAll()	
+		.authorizeRequests().antMatchers("/api/v1/comments/**").permitAll()
+		.antMatchers("/api/v1/traders/current").hasRole("TRADER")
 		.antMatchers("/api/v1/traders/**").permitAll()
 		.antMatchers("/api/v1/admin/**").hasRole("ADMIN")
 		.and().httpBasic();

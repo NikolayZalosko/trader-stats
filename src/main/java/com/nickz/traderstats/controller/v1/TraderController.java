@@ -7,7 +7,9 @@ import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -108,6 +110,15 @@ class TraderController {
 		.map(trader -> new TraderBasicInfoDto(trader.getId(), trader.getFirstName(), trader.getLastName(),
 			trader.getRating()))
 		.collect(Collectors.toList());
+    }
+    
+    /*
+     * Get current trader full info
+     */
+    @GetMapping("/current")
+    public ResponseEntity<?> getCurrentTrader(Authentication auth) {
+	Trader currentTrader = traderService.findByUserEmail(auth.getName());
+	return ResponseEntity.ok().body(currentTrader);
     }
 
 }

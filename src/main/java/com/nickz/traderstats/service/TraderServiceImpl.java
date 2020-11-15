@@ -58,6 +58,15 @@ public class TraderServiceImpl implements TraderService {
         }
         return foundTrader;
     }
+    
+    @Override
+    public Trader findByUserEmail(String email) throws ResourceNotFoundException {
+        Trader foundTrader = traderRepository.findByUserEmail(email);
+        if (foundTrader == null) {
+            throw new ResourceNotFoundException("Trader with this userEmail doesn't exist");
+        }
+        return foundTrader;
+    }
 
     @Override
     public Trader getOne(int traderId) throws ResourceNotFoundException {

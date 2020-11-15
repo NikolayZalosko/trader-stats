@@ -2,7 +2,6 @@ package com.nickz.traderstats.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -47,13 +45,6 @@ public class Trader {
     private TraderStatus status;
     
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true, optional = true)
-    /*
-    @JoinTable(
-	    name = "trader_user",
-	    joinColumns = @JoinColumn(name = "trader_id", referencedColumnName = "id"),
-	    inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")
-	    )
-	    */
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
     

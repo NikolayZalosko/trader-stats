@@ -19,7 +19,6 @@ import com.nickz.traderstats.dto.UserEmailSendingDto;
 import com.nickz.traderstats.exception.EmailNotVerifiedException;
 import com.nickz.traderstats.model.User;
 import com.nickz.traderstats.model.UserStatus;
-import com.nickz.traderstats.repository.UserRepository;
 import com.nickz.traderstats.service.EmailService;
 import com.nickz.traderstats.service.TokenService;
 import com.nickz.traderstats.service.TraderService;
@@ -114,9 +113,4 @@ class AuthController {
 	return "Password has been reset";
     }
 
-    /*
-     * @PostMapping("/save_token") public TraderToken saveToken(@RequestBody
-     * TraderToken token) { return tokenService.save(token, Duration.ofSeconds(5));
-     * }
-     */
 }
