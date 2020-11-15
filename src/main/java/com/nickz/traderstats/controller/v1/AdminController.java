@@ -1,6 +1,7 @@
 package com.nickz.traderstats.controller.v1;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,13 +47,25 @@ public class AdminController {
     public List<User> getAllUsers() {
 	return userService.findAll();
     }
-    
+
     /*
      * Get all traders with full info
      */
     @GetMapping("/traders")
-    public List<Trader> getAllTraders() {
-	return traderService.findAll();
+    public List<Trader> getAllTraders(@RequestParam(name = "filter") String filter) {
+	List<Trader> result = traderService.findAll();
+	if (filter.equals("email_verified")) {
+	    result = result.stream().filter(trader -> {
+		if (trader.getUser() == null) {
+		    return true;
+		}
+		if (trader.getUser().getStatus() == UserStatus.ACTIVE) {
+		    return true;
+		}
+		return false;
+	    }).collect(Collectors.toList());
+	}
+	return result;
     }
 
     /*
@@ -87,7 +100,7 @@ public class AdminController {
 	traderService.delete(traderId);
 	return "Trader has been deleted";
     }
-    
+
     /*
      * Delete all traders
      */
@@ -96,7 +109,7 @@ public class AdminController {
 	traderService.deleteAll();
 	return "All traders have been deleted";
     }
-    
+
     /*
      * Get trader's comments full list
      */
