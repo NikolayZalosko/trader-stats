@@ -39,11 +39,11 @@ class CommentController {
     }
 
     /*
-     * Get trader's comments
+     * Get trader's comments which are approved by admin
      */
     @GetMapping("/traders/{traderId}/comments")
     public List<Comment> getTraderComments(@PathVariable(name = "traderId") int traderId) {
-	return commentService.findTraderComments(traderId);
+	return commentService.findTraderApprovedComments(traderId);
     }
 
     /*

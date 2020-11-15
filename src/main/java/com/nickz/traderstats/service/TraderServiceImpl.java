@@ -14,6 +14,7 @@ import com.nickz.traderstats.dto.TraderWithNoUserAttachedDto;
 import com.nickz.traderstats.dto.TraderWithUserAttachedDto;
 import com.nickz.traderstats.exception.ResourceNotFoundException;
 import com.nickz.traderstats.model.Trader;
+import com.nickz.traderstats.model.TraderStatus;
 import com.nickz.traderstats.repository.CommentRepository;
 import com.nickz.traderstats.repository.TraderRepository;
 
@@ -30,6 +31,11 @@ public class TraderServiceImpl implements TraderService {
     @Override
     public List<Trader> findAll() {
 	return traderRepository.findAll();
+    }
+    
+    @Override
+    public List<Trader> findAllApproved() {
+        return traderRepository.findAllApproved();
     }
 
     @Override
@@ -54,7 +60,7 @@ public class TraderServiceImpl implements TraderService {
 	trader.setFirstName(traderDto.getFirstName());
 	trader.setLastName(traderDto.getLastName());
 	trader.setUser(traderDto.getUser());
-	trader.setIsApproved(null);
+	trader.setStatus(TraderStatus.NOT_APPROVED_YET);
 	return traderRepository.save(trader);
     }
 
@@ -63,7 +69,7 @@ public class TraderServiceImpl implements TraderService {
 	Trader trader = new Trader();
 	trader.setFirstName(traderDto.getFirstName());
 	trader.setLastName(traderDto.getLastName());
-	trader.setIsApproved(null);
+	trader.setStatus(TraderStatus.NOT_APPROVED_YET);
 	return traderRepository.save(trader);
     }
 
@@ -94,7 +100,7 @@ public class TraderServiceImpl implements TraderService {
 	    return null;
 	}
 	BigDecimal bd = new BigDecimal(Arrays.stream(estimates).average().getAsDouble());
-	bd = bd.setScale(3, RoundingMode.HALF_UP);
+	bd = bd.setScale(2, RoundingMode.HALF_UP);
 	return bd.doubleValue();
     }
 

@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,8 +16,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Builder.ObtainVia;
 
 @Entity
 @Table(name = "comment")
@@ -36,9 +41,10 @@ public class Comment {
 //    @JsonIgnore
     private Trader trader;
     */
-
-    @Column(name = "trader_id")
-    private Integer traderId;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Trader trader;
 
     @Column(name = "rating")
     private Integer rating;
@@ -50,5 +56,27 @@ public class Comment {
     private LocalDateTime creationDate;
 
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private CommentStatus status;
+
+    @Override
+    public int hashCode() {
+	return 31;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj) {
+	    return true;
+	}
+	if (!(obj instanceof Comment)) {
+	    return false;
+	}
+	Comment other = (Comment) obj;
+	if (this.id != other.getId()) {
+	    return false;
+	}
+	return true;
+    }
+     
 }

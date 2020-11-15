@@ -10,6 +10,7 @@ import com.nickz.traderstats.model.Trader;
 public interface TraderService {
     
     List<Trader> findAll();
+    List<Trader> findAllApproved();
     
     Trader findById(int traderId) throws ResourceNotFoundException;
     

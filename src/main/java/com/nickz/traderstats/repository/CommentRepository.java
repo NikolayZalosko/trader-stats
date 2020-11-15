@@ -12,8 +12,10 @@ import com.nickz.traderstats.model.Comment;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
     
-    /*@Query(value = "SELECT * FROM comment WHERE id = "
-    	+ "(SELECT comment_id FROM comments_trader WHERE trader_id = :traderId)", nativeQuery = true)*/
     @Query(value = "SELECT * FROM comment WHERE trader_id = :traderId", nativeQuery = true)
     List<Comment> findTraderComments(@Param("traderId") int traderId);
+    
+    @Query(value = "SELECT * FROM comment WHERE trader_id = :traderId AND status = 'APPROVED'", nativeQuery = true)
+    List<Comment> findTraderApprovedComments(@Param("traderId") int traderId);
+    
 }

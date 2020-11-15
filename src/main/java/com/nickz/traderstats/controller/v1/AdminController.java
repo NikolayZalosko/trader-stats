@@ -2,10 +2,12 @@ package com.nickz.traderstats.controller.v1;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nickz.traderstats.model.Comment;
 import com.nickz.traderstats.model.CommentStatus;
 import com.nickz.traderstats.model.Trader;
+import com.nickz.traderstats.model.TraderStatus;
 import com.nickz.traderstats.model.User;
 import com.nickz.traderstats.model.UserStatus;
 import com.nickz.traderstats.service.CommentService;
@@ -36,37 +39,44 @@ public class AdminController {
 	this.commentService = commentService;
     }
 
+    /*
+     * Get all users
+     */
     @GetMapping("/users")
     public List<User> getAllUsers() {
 	return userService.findAll();
+    }
+    
+    /*
+     * Get all traders with full info
+     */
+    @GetMapping("/traders")
+    public List<Trader> getAllTraders() {
+	return traderService.findAll();
     }
 
     /*
      * Approve a trader
      */
-    @GetMapping("/traders/{traderId}/approve")
-    public Trader approveTrader(@PathVariable int traderId) {
+    @PatchMapping("/traders/{traderId}/approve")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String approveTrader(@PathVariable int traderId) {
 	Trader traderToUpdate = traderService.findById(traderId);
-	traderToUpdate.setIsApproved(true);
-	return traderService.update(traderToUpdate);
+	traderToUpdate.setStatus(TraderStatus.APPROVED);
+	traderService.update(traderToUpdate);
+	return "Trader has been approved";
     }
 
     /*
      * Decline a trader
      */
-    @GetMapping("/traders/{traderId}/decline")
-    public Trader declineTrader(@PathVariable int traderId) {
+    @PatchMapping("/traders/{traderId}/decline")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String declineTrader(@PathVariable int traderId) {
 	Trader traderToUpdate = traderService.findById(traderId);
-	traderToUpdate.setIsApproved(false);
-	return traderService.update(traderToUpdate);
-    }
-
-    /*
-     * Get trader's full information
-     */
-    @GetMapping("/traders")
-    public List<Trader> getAllTraders() {
-	return traderService.findAll();
+	traderToUpdate.setStatus(TraderStatus.DECLINED);
+	traderService.update(traderToUpdate);
+	return "Trader has been declined";
     }
 
     /*
@@ -79,32 +89,44 @@ public class AdminController {
     }
     
     /*
-     * Delete all trader
+     * Delete all traders
      */
     @DeleteMapping("/traders/deleteAll")
     public String deleteAllTraders() {
 	traderService.deleteAll();
 	return "All traders have been deleted";
     }
+    
+    /*
+     * Get trader's comments full list
+     */
+    @GetMapping("/traders/{traderId}/comments")
+    public List<Comment> getTraderComments(@PathVariable(name = "traderId") int traderId) {
+	return commentService.findTraderComments(traderId);
+    }
 
     /*
      * Approve a comment and update trader's rating
      */
-    @GetMapping("/comments/{commentId}/approve")
-    public Comment approveComment(@PathVariable int commentId) {
+    @PatchMapping("/comments/{commentId}/approve")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String approveComment(@PathVariable int commentId) {
 	Comment commentToUpdate = commentService.findById(commentId);
 	commentToUpdate.setStatus(CommentStatus.APPROVED);
-	traderService.updateRating(commentToUpdate.getTraderId());
-	return commentService.update(commentToUpdate);
+	traderService.updateRating(commentToUpdate.getTrader().getId());
+	commentService.update(commentToUpdate);
+	return "Comment has been approved";
     }
 
     /*
      * Decline a comment
      */
-    @GetMapping("/comments/{commentId}/decline")
-    public Comment declineComment(@PathVariable int commentId) {
+    @PatchMapping("/comments/{commentId}/decline")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String declineComment(@PathVariable int commentId) {
 	Comment commentToUpdate = commentService.findById(commentId);
 	commentToUpdate.setStatus(CommentStatus.DECLINED);
-	return commentService.update(commentToUpdate);
+	commentService.update(commentToUpdate);
+	return "Comment has been declined";
     }
 }

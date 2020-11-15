@@ -9,6 +9,7 @@ import com.nickz.traderstats.model.Comment;
 public interface CommentService {
     
     List<Comment> findTraderComments(int traderId) throws ResourceNotFoundException;
+    List<Comment> findTraderApprovedComments(int traderId) throws ResourceNotFoundException;
     
     Comment findById(int commentId) throws ResourceNotFoundException;
 
